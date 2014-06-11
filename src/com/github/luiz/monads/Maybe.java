@@ -1,5 +1,7 @@
 package com.github.luiz.monads;
 
+import java.util.function.Function;
+
 public abstract class Maybe<T> implements Monad<Maybe, T> {
 	public static <T> Some<T> some(T value) {
 		return new Some<>(value);
@@ -27,8 +29,7 @@ class Some<T> extends Maybe<T> {
 class None<T> extends Maybe<T> {
 
 	@Override
-	public <U> None<U> bind(
-			Function<T, Monad<? extends Maybe, U>> f) {
+	public <U> None<U> bind(Function<T, Monad<? extends Maybe, U>> f) {
 		return new None<>();
 	}
 
