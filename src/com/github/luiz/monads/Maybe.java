@@ -21,16 +21,25 @@ class Some<T> extends Maybe<T> {
 	}
 
 	@Override
-	public <U> Some<U> bind(Function<T, Monad<? extends Maybe, U>> f) {
-		return (Some<U>) f.apply(value);
+	public <U extends Monad<? extends Maybe, ?>> U bind(Function<T, U> f) {
+		return f.apply(value);
+	}
+
+	@Override
+	public String toString() {
+		return "Some[" + value + "]";
 	}
 }
 
 class None<T> extends Maybe<T> {
 
 	@Override
-	public <U> None<U> bind(Function<T, Monad<? extends Maybe, U>> f) {
-		return new None<>();
+	public <U extends Monad<? extends Maybe, ?>> U bind(Function<T, U> f) {
+		return (U) this;
 	}
 
+	@Override
+	public String toString() {
+		return "None[]";
+	}
 }
